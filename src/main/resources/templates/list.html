@@ -31,7 +31,7 @@
 				id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="/form.html">회원가입</a></li>
-					<li><a href="/list.html">사용자 목록</a></li>
+					<li><a href="/list">사용자 목록</a></li>
 				</ul>
 			</div>
 			<!-- /.navbar-collapse -->
@@ -49,16 +49,13 @@
 				</tr>
 			</thead>
 			<tbody>
+				{{#users}}
 				<tr>
-					<th scope="row">javajigi</th>
-					<td>자바지기</td>
-					<td>javajigi@slipp.net</td>
+					<th scope="row">{{userId}}</th>
+					<td>{{name}}</td>
+					<td>{{email}}</td>
 				</tr>
-				<tr>
-					<th scope="row">sanjigi</th>
-					<td>산지기</td>
-					<td>sanjigi@slipp.net</td>
-				</tr>
+				{{/users}}				
 			</tbody>
 		</table>
 	</div>
