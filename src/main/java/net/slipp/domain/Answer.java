@@ -1,5 +1,7 @@
 package net.slipp.domain;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
@@ -51,12 +53,14 @@ public class Answer extends AbstractEntity {
 		return deleted;
 	}
 	
-	public void delete(User loginUser) throws CannotDeleteException {
+	public DeleteHistory delete(User loginUser) throws CannotDeleteException {
 		if (!writer.equals(loginUser)) {
 			throw new CannotDeleteException("다른 사용자가 작성한 답변을 삭제할 수 없습니다.");
 		}
 		
 		this.deleted = true;
+		
+		return new DeleteHistory(ContentType.ANSWER, getId(), loginUser, LocalDateTime.now());
 	}
 
 	@Override
