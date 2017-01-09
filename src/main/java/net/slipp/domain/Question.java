@@ -1,5 +1,6 @@
 package net.slipp.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -9,6 +10,8 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+
+import org.hibernate.annotations.Where;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -30,8 +33,11 @@ public class Question extends AbstractEntity {
 	private Integer countOfAnswer = 0;
 	
 	@OneToMany(mappedBy="question")
-	@OrderBy("id DESC")
-	private List<Answer> answers;
+	@Where(clause = "deleted = false")
+	@OrderBy("id ASC")
+	private List<Answer> answers = new ArrayList<Answer>();
+	
+	private boolean deleted;
 	
 	public Question() {}
 	
@@ -39,6 +45,14 @@ public class Question extends AbstractEntity {
 		this.writer = writer;
 		this.title = title;
 		this.contents = contents;
+	}
+	
+	public void writeBy(User writer) {
+		this.writer = writer;
+	}
+	
+	public void addAnswer(Answer answer) {
+		answers.add(answer);
 	}
 	
 	public void update(String title, String contents) {
@@ -49,6 +63,10 @@ public class Question extends AbstractEntity {
 	public boolean isSameWriter(User loginUser) {
 		System.out.println("writer : " + writer);
 		return this.writer.equals(loginUser);
+	}
+	
+	public boolean isDeleted() {
+		return deleted;
 	}
 	
 	public void addAnswer() {

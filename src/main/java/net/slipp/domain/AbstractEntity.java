@@ -25,6 +25,13 @@ public class AbstractEntity {
 	@LastModifiedDate
 	private LocalDateTime modifiedDate;
 	
+	public AbstractEntity() {
+	}
+	
+	public AbstractEntity(Long id) {
+		this.id = id;
+	}
+
 	public Long getId() {
 		return id;
 	}

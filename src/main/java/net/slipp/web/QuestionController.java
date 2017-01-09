@@ -12,16 +12,21 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import net.slipp.CannotDeleteException;
 import net.slipp.domain.Question;
 import net.slipp.domain.QuestionRepository;
 import net.slipp.domain.Result;
 import net.slipp.domain.User;
+import net.slipp.service.QnaService;
 
 @Controller
 @RequestMapping("/questions")
 public class QuestionController {
 	@Autowired
 	private QuestionRepository questionRepository;
+	
+	@Autowired
+	private QnaService qnaService;
 	
 	@GetMapping("/form")
 	public String form(HttpSession session) {
@@ -92,14 +97,17 @@ public class QuestionController {
 	
 	@DeleteMapping("/{id}")
 	public String delete(@PathVariable Long id, Model model, HttpSession session) {
-		Question question = questionRepository.findOne(id);
-		Result result = valid(session, question);
-		if (!result.isValid()) {
-			model.addAttribute("errorMessage", result.getErrorMessage());
+		if (!HttpSessionUtils.isLoginUser(session)) {
+			model.addAttribute("errorMessage", "로그인이 필요합니다.");
 			return "/user/login";
 		}
 		
-		questionRepository.delete(id);
-		return "redirect:/";
+		try {
+			qnaService.deleteQuestion(id, HttpSessionUtils.getUserFromSession(session));
+			return "redirect:/";
+		} catch (CannotDeleteException e) {
+			model.addAttribute("errorMessage", e.getMessage());
+			return "/user/login";
+		}
 	}
 }
