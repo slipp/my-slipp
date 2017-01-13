@@ -87,6 +87,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>my-slipp</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
