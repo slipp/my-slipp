@@ -34,6 +34,8 @@ public class Question extends AbstractEntity {
 	
 	@JsonProperty
 	private Integer countOfAnswer = 0;
+
+	private Integer showCount = 0;
 	
 	@OneToMany(mappedBy="question")
 	@Where(clause = "deleted = false")
