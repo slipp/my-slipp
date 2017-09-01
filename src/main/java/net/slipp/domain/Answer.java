@@ -46,8 +46,40 @@ public class Answer {
 		}
 		return createDate.format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss"));
 	}
+	
+	public Long getId() {
+        return id;
+    }
 
-	@Override
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public User getWriter() {
+        return writer;
+    }
+
+    public void setWriter(User writer) {
+        this.writer = writer;
+    }
+
+    public Question getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(Question question) {
+        this.question = question;
+    }
+
+    public String getContents() {
+        return contents;
+    }
+
+    public void setContents(String contents) {
+        this.contents = contents;
+    }
+
+    @Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;

@@ -52,8 +52,28 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	public Long getId() {
+        return id;
+    }
 
-	public void update(User newUser) {
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void update(User newUser) {
 		this.password = newUser.password;
 		this.name = newUser.name;
 		this.email = newUser.email;
